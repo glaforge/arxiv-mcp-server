@@ -38,7 +38,7 @@ public class ArxivSearchIntegrationTest {
         SortBy sortBy = null;
         SortOrder sortOrder = null;
 
-        Feed feed = server.search_papers(query, maxResults, sortBy, sortOrder);
+        Feed feed = server.searchPapers(query, maxResults, sortBy, sortOrder);
 
         assertNotNull(feed);
         System.out.println("Found " + feed.entries.size() + " entries");

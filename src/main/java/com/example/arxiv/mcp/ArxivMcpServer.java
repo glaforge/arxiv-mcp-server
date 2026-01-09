@@ -20,6 +20,9 @@ import com.example.arxiv.model.SortBy;
 import com.example.arxiv.model.SortOrder;
 import com.example.arxiv.service.ArxivClient;
 import com.example.arxiv.service.PdfClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import io.quarkiverse.mcp.server.BlobResourceContents;
 import io.quarkiverse.mcp.server.Prompt;
 import io.quarkiverse.mcp.server.PromptMessage;
@@ -45,17 +48,17 @@ public class ArxivMcpServer {
     @RestClient
     PdfClient pdfClient;
 
-    private final com.fasterxml.jackson.dataformat.xml.XmlMapper xmlMapper = new com.fasterxml.jackson.dataformat.xml.XmlMapper();
+    private final XmlMapper xmlMapper = new XmlMapper();
 
-    @Tool(description = "Search for papers on arXiv")
-    public Feed search_papers(String query, int max_results, SortBy sort_by, SortOrder sort_order) {
-        return performSearch(query, null, 0, max_results == 0 ? 5 : max_results,
-            sort_by == null ? null : sort_by.name(),
-            sort_order == null ? null : sort_order.name());
+    @Tool(description = "Search for papers on arXiv", name = "search_papers")
+    public Feed searchPapers(String query, int maxResults, SortBy sortBy, SortOrder sortOrder) {
+        return performSearch(query, null, 0, maxResults == 0 ? 5 : maxResults,
+            sortBy == null ? null : sortBy.name(),
+            sortOrder == null ? null : sortOrder.name());
     }
 
-    @Tool(description = "Get details for specific papers by ID")
-    public Feed get_paper_details(List<String> ids) {
+    @Tool(description = "Get details for specific papers by ID", name = "get_paper_details")
+    public Feed getPaperDetails(List<String> ids) {
         String idList = String.join(",", ids);
         return performSearch(null, idList, 0, ids.size(), null, null);
     }
@@ -69,7 +72,7 @@ public class ArxivMcpServer {
         throw new RuntimeException("Paper not found: " + id);
     }
 
-    private final com.fasterxml.jackson.databind.ObjectMapper jsonMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+    private final ObjectMapper jsonMapper = new ObjectMapper();
 
     @ResourceTemplate(uriTemplate = "arxiv://papers/{id}/metadata", description = "The full metadata of the paper", mimeType = "application/json")
     public TextResourceContents getMetadata(@ResourceTemplateArg String id) {
@@ -85,7 +88,7 @@ public class ArxivMcpServer {
     }
 
 
-    @ResourceTemplate(uriTemplate = "arxiv://papers/{id}/pdf", description = "The PDF of the paper", mimeType = "application/pdf")
+    @ResourceTemplate(uriTemplate = "arxiv://papers/{id}/pdf", description = "The PDF of the paper encoded in base64", mimeType = "application/pdf")
     public BlobResourceContents getPdf(@ResourceTemplateArg String id) {
         try (InputStream is = pdfClient.getPdf(id)) {
             byte[] bytes = is.readAllBytes();
@@ -97,11 +100,11 @@ public class ArxivMcpServer {
     }
 
     @Prompt(name = "summarize_paper", description = "Summarize the given paper")
-    public PromptMessage summarize_paper(String id) {
+    public PromptMessage summarizePaper(String id) {
         Feed feed = performSearch(null, id, 0, 1, null, null);
         if (feed.entries != null && !feed.entries.isEmpty()) {
             String summary = feed.entries.get(0).summary;
-            return PromptMessage.withUserRole("Please summarize this paper abstract:\n\n" + summary);
+            return PromptMessage.withUserRole("Please summarize this paper abstract (ID: " + id + "):\n\n" + summary);
         }
         return PromptMessage.withUserRole("Error: Paper not found");
     }

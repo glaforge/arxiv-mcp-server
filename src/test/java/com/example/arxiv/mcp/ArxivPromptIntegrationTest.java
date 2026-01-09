@@ -15,30 +15,28 @@
  */
 package com.example.arxiv.mcp;
 
+import io.quarkiverse.mcp.server.PromptMessage;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
-import com.example.arxiv.model.Feed;
-
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class ArxivIntegrationTest {
+public class ArxivPromptIntegrationTest {
 
     @Inject
     ArxivMcpServer server;
 
     @Test
-    public void testGetPaperDetails() {
-        List<String> ids = Collections.singletonList("2601.05230");
-        Feed feed = server.getPaperDetails(ids);
-        assertNotNull(feed);
-        assertNotNull(feed.entries);
-        assertFalse(feed.entries.isEmpty());
-        System.out.println("Title: " + feed.entries.get(0).title);
+    public void testSummarizePaperPrompt() {
+        String paperId = "2601.05230"; // Valid paper ID
+        PromptMessage promptMessage = server.summarizePaper(paperId);
+
+        assertNotNull(promptMessage);
+        String text = promptMessage.content().asText().text();
+        assertTrue(text.contains(paperId));
+        assertTrue(text.toLowerCase().contains("summarize"));
     }
 }
