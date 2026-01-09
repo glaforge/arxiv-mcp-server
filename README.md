@@ -1,4 +1,4 @@
-# Arxiv MCP Server
+# arXiv MCP Server
 
 This is a Model Context Protocol (MCP) server implementation for the [arXiv](https://arxiv.org/) API. It allows AI models to search for papers, retrieve paper details, and access PDF content from arXiv.
 
@@ -45,7 +45,7 @@ You can test the server using the [MCP Inspector](https://github.com/modelcontex
     ```bash
     ./mvnw quarkus:dev
     ```
-    The server will listen on port `8080` (HTTP SSE).
+    The server will listen on port `8080` (Streamable HTTP).
 
 2.  In a separate terminal, launch the MCP Inspector:
     ```bash
@@ -56,7 +56,7 @@ You can test the server using the [MCP Inspector](https://github.com/modelcontex
 
 ## Installation for Gemini CLI
 
-To use this server with the Gemini CLI (or other valid MCP clients), you need to configure it to use the `stdio` transport.
+To use this server with the [Gemini CLI](https://geminicli.com/) (or other valid MCP clients), you need to configure it to use the `stdio` transport (but it's also possible to use the Streamable HTTP transport, but you have to deploy the MCP server or run it locally).
 
 1.  Build the project as described in the "Building the Server" section.
 2.  Add the server configuration to your MCP config file (e.g., `~/.gemini/mcp-servers.json`):
