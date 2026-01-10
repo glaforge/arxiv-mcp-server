@@ -29,10 +29,11 @@ public interface ArxivClient {
     @GET
     @Path("/query")
     @Produces("*/*")
-    String search(@QueryParam("search_query") String searchQuery,
-                @QueryParam("id_list") String idList,
-                @QueryParam("start") int start,
-                @QueryParam("max_results") int maxResults,
-                @QueryParam("sortBy") String sortBy,
-                @QueryParam("sortOrder") String sortOrder);
+    String search(
+        @QueryParam("search_query") String searchQuery,
+        @QueryParam("id_list") String idList,
+        @QueryParam("start") int start,
+        @QueryParam("max_results") int maxResults,
+        @QueryParam("sortBy") String sortBy,
+        @QueryParam("sortOrder") String sortOrder);
 }

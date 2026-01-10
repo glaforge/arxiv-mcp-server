@@ -63,23 +63,29 @@ public class ArxivMcpServer {
         return performSearch(null, idList, 0, ids.size(), null, null);
     }
 
-    @ResourceTemplate(uriTemplate = "arxiv://papers/{id}/abstract", description = "The abstract of the paper")
+    @ResourceTemplate(
+        uriTemplate = "arxiv://papers/{id}/abstract",
+        description = "The abstract of the paper")
     public TextResourceContents getAbstract(@ResourceTemplateArg String id) {
         Feed feed = performSearch(null, id, 0, 1, null, null);
         if (feed.entries != null && !feed.entries.isEmpty()) {
-            return TextResourceContents.create("arxiv://papers/" + id + "/abstract", feed.entries.get(0).summary);
+            return TextResourceContents.create("arxiv://papers/" + id + "/abstract",
+                feed.entries.get(0).summary);
         }
         throw new RuntimeException("Paper not found: " + id);
     }
 
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
-    @ResourceTemplate(uriTemplate = "arxiv://papers/{id}/metadata", description = "The full metadata of the paper", mimeType = "application/json")
+    @ResourceTemplate(
+        uriTemplate = "arxiv://papers/{id}/metadata",
+        description = "The full metadata of the paper", mimeType = "application/json")
     public TextResourceContents getMetadata(@ResourceTemplateArg String id) {
         Feed feed = performSearch(null, id, 0, 1, null, null);
         if (feed.entries != null && !feed.entries.isEmpty()) {
             try {
-                return TextResourceContents.create("arxiv://papers/" + id + "/metadata", jsonMapper.writeValueAsString(feed.entries.get(0)));
+                return TextResourceContents.create("arxiv://papers/" + id + "/metadata",
+                    jsonMapper.writeValueAsString(feed.entries.get(0)));
             } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
                 throw new RuntimeException("Failed to serialize paper metadata", e);
             }
@@ -87,8 +93,10 @@ public class ArxivMcpServer {
         throw new RuntimeException("Paper not found: " + id);
     }
 
-
-    @ResourceTemplate(uriTemplate = "arxiv://papers/{id}/pdf", description = "The PDF of the paper encoded in base64", mimeType = "application/pdf")
+    @ResourceTemplate(
+        uriTemplate = "arxiv://papers/{id}/pdf",
+        description = "The PDF of the paper encoded in base64",
+        mimeType = "application/pdf")
     public BlobResourceContents getPdf(@ResourceTemplateArg String id) {
         try (InputStream is = pdfClient.getPdf(id)) {
             byte[] bytes = is.readAllBytes();
@@ -99,12 +107,15 @@ public class ArxivMcpServer {
         }
     }
 
-    @Prompt(name = "summarize_paper", description = "Summarize the given paper")
+    @Prompt(
+        name = "summarize_paper",
+        description = "Summarize the given paper")
     public PromptMessage summarizePaper(String id) {
         Feed feed = performSearch(null, id, 0, 1, null, null);
         if (feed.entries != null && !feed.entries.isEmpty()) {
             String summary = feed.entries.get(0).summary;
-            return PromptMessage.withUserRole("Please summarize this paper abstract (ID: " + id + "):\n\n" + summary);
+            return PromptMessage.withUserRole(
+                "Please summarize this paper abstract (ID: " + id + "):\n\n" + summary);
         }
         return PromptMessage.withUserRole("Error: Paper not found");
     }
