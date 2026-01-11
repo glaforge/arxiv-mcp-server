@@ -37,6 +37,14 @@ To build the project and generate the executable jar:
 
 This will produce the runner jar at `target/quarkus-app/quarkus-run.jar`.
 
+## Running the Server
+
+To run the server locally using the built jar:
+
+```bash
+java -jar target/quarkus-app/quarkus-run.jar
+```
+
 ## Running with MCP Inspector
 
 You can test the server using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector).

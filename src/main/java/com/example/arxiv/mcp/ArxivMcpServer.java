@@ -50,14 +50,18 @@ public class ArxivMcpServer {
 
     private final XmlMapper xmlMapper = new XmlMapper();
 
-    @Tool(description = "Search for papers on arXiv", name = "search_papers")
+    @Tool(
+        description = "Search for papers on arXiv",
+        name = "search_papers")
     public Feed searchPapers(String query, int maxResults, SortBy sortBy, SortOrder sortOrder) {
         return performSearch(query, null, 0, maxResults == 0 ? 5 : maxResults,
             sortBy == null ? null : sortBy.name(),
             sortOrder == null ? null : sortOrder.name());
     }
 
-    @Tool(description = "Get details for specific papers by ID", name = "get_paper_details")
+    @Tool(
+        description = "Get details for specific papers by ID",
+        name = "get_paper_details")
     public Feed getPaperDetails(List<String> ids) {
         String idList = String.join(",", ids);
         return performSearch(null, idList, 0, ids.size(), null, null);
