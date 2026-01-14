@@ -97,7 +97,7 @@ To use this server with the [Gemini CLI](https://geminicli.com/) (or other valid
 
 ### Development Mode
 
-While in development mode, you can point at your live running server instead, by registering it as follows in your agent configuration file:
+While in development mode, you can point your coding agent at your own live running server instead, by registering it as follows in your agent configuration file:
 
 ```json
 {
