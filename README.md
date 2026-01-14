@@ -19,8 +19,18 @@ This is a Model Context Protocol (MCP) server implementation for the [arXiv](htt
 - `get_paper_details`: Get details for a list of paper IDs.
 
 ### Resources
+- `arxiv://papers/{id}/abstract`: Get the abstract of the paper.
 - `arxiv://papers/{id}/metadata`: Get full metadata for a paper as JSON.
-- `arxiv://papers/{id}/pdf`: Get the PDF content of a paper.
+- `https://arxiv.org/pdf/{id}`: Get the PDF content of a paper (Base64 encoded).
+- `arxiv://taxonomy`: Get the list of arXiv subject categories and their codes.
+
+### Prompts
+- `summarize_paper`: Summarize a specific paper by its ID.
+- `construct_search_query`: Helper to build a complex arXiv API search query.
+    - `topic`: Topic or keywords.
+    - `author`: Author name.
+    - `category`: Category code (e.g. `cs.AI`).
+    - `year`: Year (e.g. `2024`).
 
 ## Prerequisites
 
