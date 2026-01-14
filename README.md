@@ -95,6 +95,23 @@ To use this server with the [Gemini CLI](https://geminicli.com/) (or other valid
 
 > **Note:** Replace `/absolute/path/to/your/project` with the actual path to your project directory.
 
+### Development Mode
+
+While in development mode, you can point at your live running server instead, by registering it as follows in your agent configuration file:
+
+```json
+{
+  "mcpServers": {
+    "arxiv": {
+      "httpUrl": "http://localhost:8080/mcp"
+    }
+  }
+}
+```
+
+> **Note:** Instead of having your coding agent launch the STDIO server, you can point it at your live running server.
+> This is particularly handy when for live reloading modifications of the server code.
+
 ## License
 
 This project is licensed under the Apache License, Version 2.0.
