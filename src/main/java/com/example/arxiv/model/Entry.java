@@ -49,4 +49,16 @@ public class Entry {
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "category", namespace = "http://www.w3.org/2005/Atom")
     public List<Category> categories;
+
+    @JacksonXmlProperty(localName = "primary_category", namespace = "http://arxiv.org/schemas/atom")
+    public Category primaryCategory;
+
+    @JacksonXmlProperty(localName = "comment", namespace = "http://arxiv.org/schemas/atom")
+    public String comment;
+
+    @JacksonXmlProperty(localName = "journal_ref", namespace = "http://arxiv.org/schemas/atom")
+    public String journalRef;
+
+    @JacksonXmlProperty(localName = "doi", namespace = "http://arxiv.org/schemas/atom")
+    public String doi;
 }

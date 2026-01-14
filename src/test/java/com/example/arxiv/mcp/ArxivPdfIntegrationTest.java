@@ -20,6 +20,7 @@ import io.quarkiverse.mcp.server.BlobResourceContents;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,6 +36,7 @@ public class ArxivPdfIntegrationTest {
         BlobResourceContents contents = server.getPdf(id);
 
         assertNotNull(contents);
+        assertEquals("application/pdf", contents.mimeType());
         // Base64 encoded content should not be empty
         assertNotNull(contents.blob());
         assertTrue(contents.blob().length() > 0);
