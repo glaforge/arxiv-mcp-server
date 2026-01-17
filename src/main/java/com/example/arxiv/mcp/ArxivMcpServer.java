@@ -22,6 +22,7 @@ import com.example.arxiv.service.ArxivClient;
 import com.example.arxiv.service.PdfClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.quarkus.logging.Log;
 import io.quarkiverse.mcp.server.BlobResourceContents;
@@ -101,7 +102,7 @@ public class ArxivMcpServer {
             try {
                 return TextResourceContents.create("arxiv://papers/" + id + "/metadata",
                     jsonMapper.writeValueAsString(feed.entries.get(0)));
-            } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+            } catch (JsonProcessingException e) {
                 throw new RuntimeException("Failed to serialize paper metadata", e);
             }
         }
