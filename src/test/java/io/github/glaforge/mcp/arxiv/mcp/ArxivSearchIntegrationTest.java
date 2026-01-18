@@ -13,33 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.mcp;
+package io.github.glaforge.mcp.arxiv.mcp;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkiverse.mcp.server.BlobResourceContents;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import io.github.glaforge.mcp.arxiv.model.Feed;
+import io.github.glaforge.mcp.arxiv.model.SortBy;
+import io.github.glaforge.mcp.arxiv.model.SortOrder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class ArxivPdfIntegrationTest {
+public class ArxivSearchIntegrationTest {
 
     @Inject
     ArxivMcpServer server;
 
     @Test
-    public void testGetPdf() {
-        String id = "2601.00844v1"; // ID from user report
-        BlobResourceContents contents = server.getPdf(id);
+    public void testSearchPapersWithEmptySort() {
+        // Reproducing the parameters from the user report
+        String query = "JEPA world model";
+        int maxResults = 5;
+        SortBy sortBy = null;
+        SortOrder sortOrder = null;
 
-        assertNotNull(contents);
-        assertEquals("application/pdf", contents.mimeType());
-        // Base64 encoded content should not be empty
-        assertNotNull(contents.blob());
-        assertTrue(contents.blob().length() > 0);
-        System.out.println("PDF Blob length: " + contents.blob().length());
+        Feed feed = server.searchPapers(query, maxResults, sortBy, sortOrder);
+
+        assertNotNull(feed);
+        System.out.println("Found " + feed.entries.size() + " entries");
     }
 }

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.model;
+package io.github.glaforge.mcp.arxiv.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Author {
-    @JacksonXmlProperty(namespace = "http://www.w3.org/2005/Atom")
-    public String name;
+public class Category {
+    @JacksonXmlProperty(isAttribute = true)
+    public String term;
 
-    @JacksonXmlProperty(namespace = "http://arxiv.org/schemas/atom")
-    public String affiliation;
+    @JacksonXmlProperty(isAttribute = true)
+    public String scheme;
 }

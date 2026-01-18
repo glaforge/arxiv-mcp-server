@@ -13,34 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.mcp;
+package io.github.glaforge.mcp.arxiv.mcp;
 
+import io.quarkiverse.mcp.server.PromptMessage;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
-import com.example.arxiv.model.Feed;
-import com.example.arxiv.model.SortBy;
-import com.example.arxiv.model.SortOrder;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class ArxivSearchIntegrationTest {
+public class ArxivPromptIntegrationTest {
 
     @Inject
     ArxivMcpServer server;
 
     @Test
-    public void testSearchPapersWithEmptySort() {
-        // Reproducing the parameters from the user report
-        String query = "JEPA world model";
-        int maxResults = 5;
-        SortBy sortBy = null;
-        SortOrder sortOrder = null;
+    public void testSummarizePaperPrompt() {
+        String paperId = "2601.05230"; // Valid paper ID
+        PromptMessage promptMessage = server.summarizePaper(paperId);
 
-        Feed feed = server.searchPapers(query, maxResults, sortBy, sortOrder);
-
-        assertNotNull(feed);
-        System.out.println("Found " + feed.entries.size() + " entries");
+        assertNotNull(promptMessage);
+        String text = promptMessage.content().asText().text();
+        assertTrue(text.contains(paperId));
+        assertTrue(text.toLowerCase().contains("summarize"));
     }
 }

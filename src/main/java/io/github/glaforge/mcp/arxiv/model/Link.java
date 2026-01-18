@@ -13,30 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.model;
+package io.github.glaforge.mcp.arxiv.model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Feed {
-    @JacksonXmlProperty(namespace = "http://www.w3.org/2005/Atom")
+public class Link {
+    @JacksonXmlProperty(isAttribute = true)
+    public String href;
+
+    @JacksonXmlProperty(isAttribute = true)
+    public String rel;
+
+    @JacksonXmlProperty(isAttribute = true)
     public String title;
 
-    @JacksonXmlProperty(namespace = "http://www.w3.org/2005/Atom")
-    public String id;
-
-    @JacksonXmlProperty(namespace = "http://www.w3.org/2005/Atom")
-    public String updated;
-
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "link", namespace = "http://www.w3.org/2005/Atom")
-    public List<Link> links;
-
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "entry", namespace = "http://www.w3.org/2005/Atom")
-    public List<Entry> entries;
+    @JacksonXmlProperty(isAttribute = true)
+    public String type;
 }

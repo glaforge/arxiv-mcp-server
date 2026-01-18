@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.mcp;
+package io.github.glaforge.mcp.arxiv.mcp;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkiverse.mcp.server.TextResourceContents;
+import io.quarkiverse.mcp.server.BlobResourceContents;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class ArxivMetadataIntegrationTest {
+public class ArxivPdfIntegrationTest {
 
     @Inject
     ArxivMcpServer server;
 
     @Test
-    public void testGetMetadataJson() {
+    public void testGetPdf() {
         String id = "2601.00844v1"; // ID from user report
-        TextResourceContents contents = server.getMetadata(id);
+        BlobResourceContents contents = server.getPdf(id);
 
         assertNotNull(contents);
-        assertNotNull(contents.text());
-        System.out.println("Metadata JSON: " + contents.text());
-
-        // rudimentary JSON check
-        assertTrue(contents.text().trim().startsWith("{"), "Output should be JSON starting with '{'");
-        assertTrue(contents.text().contains("\"id\""), "Output should contain 'id' field");
+        assertEquals("application/pdf", contents.mimeType());
+        // Base64 encoded content should not be empty
+        assertNotNull(contents.blob());
+        assertTrue(contents.blob().length() > 0);
+        System.out.println("PDF Blob length: " + contents.blob().length());
     }
 }

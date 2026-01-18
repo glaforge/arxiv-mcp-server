@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.mcp;
+package io.github.glaforge.mcp.arxiv.mcp;
 
 import io.quarkiverse.mcp.server.PromptMessage;
 import io.quarkiverse.mcp.server.TextResourceContents;

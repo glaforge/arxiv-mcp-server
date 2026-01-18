@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.model;
+package io.github.glaforge.mcp.arxiv.service;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import java.io.InputStream;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Category {
-    @JacksonXmlProperty(isAttribute = true)
-    public String term;
-
-    @JacksonXmlProperty(isAttribute = true)
-    public String scheme;
+@RegisterRestClient(baseUri = "https://arxiv.org")
+public interface PdfClient {
+    @GET
+    @Path("/pdf/{id}")
+    @Produces("application/pdf")
+    InputStream getPdf(@PathParam("id") String id);
 }

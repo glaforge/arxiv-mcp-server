@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.arxiv.mcp;
+package io.github.glaforge.mcp.arxiv.mcp;
 
-import com.example.arxiv.model.Feed;
+import io.github.glaforge.mcp.arxiv.model.Feed;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.jupiter.api.Test;
