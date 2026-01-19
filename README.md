@@ -32,30 +32,65 @@ This is a Model Context Protocol (MCP) server implementation for the [arXiv](htt
     - `category`: Category code (e.g. `cs.AI`).
     - `year`: Year (e.g. `2024`).
 
-## Prerequisites
+## Quick Start with JBang (Recommended)
 
-- JDK 17 or later
+The easiest way to use this MCP server is via [JBang](https://jbang.dev/). It handles the JVM and dependencies automatically, so you don't need to build the project locally.
+
+### 1. Install JBang
+If you don't have JBang installed, you can install it via Homebrew:
+```bash
+brew install jbangdev/tap/jbang
+```
+(For other platforms, see the [JBang installation guide](https://jbang.dev/download/)).
+
+### 2. Configure your Agent CLI
+
+You can point your agent (Gemini CLI, Claude Code, etc.) at the JBang alias. This will automatically download and run the latest release.
+
+#### Configuration Snippet
+Add this to your `mcp-servers.json` or equivalent config file:
+
+```json
+{
+  "mcpServers": {
+    "arxiv": {
+      "command": "jbang",
+      "args": ["run", "arxiv-mcp@glaforge"]
+    }
+  }
+}
+```
+
+---
+
+## Local Development and Building
+
+If you want to build and run the server locally, follow these steps.
+
+### Prerequisites
+
+- JDK 21 or later
 - Maven (wrapper included)
 
-## Building the Server
+### Building the Server
 
-To build the project and generate the executable jar:
+The project is configured to produce an **Uber-Jar** for easy distribution.
 
 ```bash
 ./mvnw clean package -DskipTests
 ```
 
-This will produce the runner jar at `target/quarkus-app/quarkus-run.jar`.
+This will produce the runner jar at `target/arxiv-mcp-server-runner.jar`.
 
-## Running the Server
+### Running the Server
 
-To run the server locally using the built jar:
+To run the built server:
 
 ```bash
-java -jar target/quarkus-app/quarkus-run.jar
+java -jar target/arxiv-mcp-server-runner.jar
 ```
 
-## Running with MCP Inspector
+### Running with MCP Inspector
 
 You can test the server using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector).
 
@@ -72,12 +107,9 @@ You can test the server using the [MCP Inspector](https://github.com/modelcontex
 
 3.  Open the URL provided by the inspector in your browser to interact with the tools and resources.
 
-## Installation for Gemini CLI
+## Manual Configuration (Local Build)
 
-To use this server with the [Gemini CLI](https://geminicli.com/) (or other valid MCP clients), you need to configure it to use the `stdio` transport (but it's also possible to use the Streamable HTTP transport, but you have to deploy the MCP server or run it locally).
-
-1.  Build the project as described in the "Building the Server" section.
-2.  Add the server configuration to your MCP config file (e.g., `~/.gemini/mcp-servers.json`):
+If you prefer to run the version you built locally:
 
 ```json
 {
@@ -86,7 +118,7 @@ To use this server with the [Gemini CLI](https://geminicli.com/) (or other valid
       "command": "java",
       "args": [
         "-jar",
-        "/absolute/path/to/your/project/target/quarkus-app/quarkus-run.jar"
+        "/absolute/path/to/your/project/target/arxiv-mcp-server-runner.jar"
       ]
     }
   }
@@ -95,9 +127,9 @@ To use this server with the [Gemini CLI](https://geminicli.com/) (or other valid
 
 > **Note:** Replace `/absolute/path/to/your/project` with the actual path to your project directory.
 
-### Development Mode
+### Development Mode (Live Reload)
 
-While in development mode, you can point your coding agent at your own live running server instead, by registering it as follows in your agent configuration file:
+While in development mode (`./mvnw quarkus:dev`), you can point your coding agent at your live running server for instant updates:
 
 ```json
 {
@@ -108,9 +140,6 @@ While in development mode, you can point your coding agent at your own live runn
   }
 }
 ```
-
-> **Note:** Instead of having your coding agent launch the STDIO server, you can point it at your live running server.
-> This is particularly handy when for live reloading modifications of the server code.
 
 ## License
 
