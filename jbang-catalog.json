@@ -1,12 +1,17 @@
 {
+  "catalogs": {
+    "glaforge": {
+      "catalog-ref": "https://raw.githubusercontent.com/glaforge/arxiv-mcp-server/main/jbang-catalog.json"
+    }
+  },
   "aliases": {
     "arxiv-mcp": {
       "script-ref": "https://github.com/glaforge/arxiv-mcp-server/releases/latest/download/arxiv-mcp-server-runner.jar",
       "description": "ArXiv MCP Server",
-      "java": "21",
-      "java-options": [
-        "--add-opens=java.base/java.lang=ALL-UNNAMED"
-      ]
+      "runtime-options": [
+        "--add-opens\u003djava.base/java.lang\u003dALL-UNNAMED"
+      ],
+      "java": "21"
     }
   }
 }
