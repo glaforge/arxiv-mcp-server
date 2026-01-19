@@ -43,7 +43,13 @@ brew install jbangdev/tap/jbang
 ```
 (For other platforms, see the [JBang installation guide](https://jbang.dev/download/)).
 
-### 2. Configure your Agent CLI
+### 2. Trust the Source
+Since you are running a script from the internet, JBang requires you to trust the source. Run this command once:
+```bash
+jbang trust https://github.com/glaforge/arxiv-mcp-server/releases/latest/
+```
+
+### 3. Configure your Agent CLI
 
 You can point your agent (Gemini CLI, Claude Code, etc.) at the JBang alias. This will automatically download and run the latest release.
 
