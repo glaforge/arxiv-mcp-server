@@ -2,7 +2,11 @@
   "aliases": {
     "arxiv-mcp": {
       "script-ref": "https://github.com/glaforge/arxiv-mcp-server/releases/latest/download/arxiv-mcp-server-runner.jar",
-      "description": "ArXiv MCP Server"
+      "description": "ArXiv MCP Server",
+      "java": "21",
+      "java-options": [
+        "--add-opens=java.base/java.lang=ALL-UNNAMED"
+      ]
     }
   }
 }
