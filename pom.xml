@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.glaforge.mcp.arxiv</groupId>
     <artifactId>arxiv-mcp-server</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 
     <properties>
         <compiler-plugin.version>3.14.1</compiler-plugin.version>

@@ -43,13 +43,20 @@ brew install jbangdev/tap/jbang
 ```
 (For other platforms, see the [JBang installation guide](https://jbang.dev/download/)).
 
-### 2. Trust the Source
-Since you are running a script from the internet, JBang requires you to trust the source. Run this command once:
+### 2. Configure the Catalog
+Since the catalog is not in a standard `jbang-catalog` repository, you need to add it explicitly. We'll verify it as `glaforge` so `arxiv-mcp@glaforge` works:
+
 ```bash
-jbang trust https://github.com/glaforge/arxiv-mcp-server/releases/latest/
+jbang catalog add --name glaforge https://raw.githubusercontent.com/glaforge/arxiv-mcp-server/main/jbang-catalog.json
 ```
 
-### 3. Configure your Agent CLI
+### 3. Trust the Source
+Since you are running a script from the internet, JBang requires you to trust the source. Run this command once:
+```bash
+jbang trust add https://github.com/glaforge/arxiv-mcp-server/releases/latest/
+```
+
+### 4. Configure your Agent CLI
 
 You can point your agent (Gemini CLI, Claude Code, etc.) at the JBang alias. This will automatically download and run the latest release.
 
