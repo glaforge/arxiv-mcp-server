@@ -136,6 +136,10 @@ If you prefer to run the version you built locally:
 
 > **Note:** Replace `/absolute/path/to/your/project` with the actual path to your project directory.
 
+## Deploying to the Cloud
+
+For instructions on how to deploy this MCP server to **Google Cloud Run**, see [cloud-run-deploy.md](cloud-run-deploy.md).
+
 ### Development Mode (Live Reload)
 
 While in development mode (`./mvnw quarkus:dev`), you can point your coding agent at your live running server for instant updates:
